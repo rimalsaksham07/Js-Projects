@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventTarget</title>
+</head>
+<body>
+    <div>
+        <h1>Event Target</h1>
+        <p id="text">Enter a Programming Language :</p>
+        <ul id="list">
+            <li>JavaScript</li>
+        </ul>
+        <input id="inputField" type="text">
+        <button id="btn">Submit</button>
+    </div>
+
+    <script>
+        const inputField = document.getElementById('inputField');
+        const button = document.getElementById('btn');
+        const list = document.getElementById('list');
+         
+        button.addEventListener("click", (event) => {
+            const result = inputField.value
+            const formated_result = result[0].toUpperCase() + result.slice(1).toLowerCase()
+            const li = document.createElement('li')
+            li.innerHTML = formated_result
+            list.appendChild(li)
+            console.log(list)           
+        });
+
+    </script>
+</body>
+</html>
