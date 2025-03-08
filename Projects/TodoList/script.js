@@ -13,6 +13,7 @@ function AddTask() {
     let span = document.createElement('span')
     span.innerHTML = "\u00d7"
     li.appendChild(span)
+    console.log(span)
   }
   inputBox.value = " "
   saveData()
@@ -27,7 +28,7 @@ listContainer.addEventListener('click' , function(e){
         e.target.parentElement.remove();
         saveData()
     }
-} , false)
+} )
 
 function saveData(){
     localStorage.setItem("data" , listContainer.innerHTML);
