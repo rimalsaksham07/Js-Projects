@@ -3,12 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Popular Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .movie {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        h2 {
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <script src="script.js"></script>
+    <h1>Popular Movies</h1>
+    <div class="container" id="movies"></div>
 
-    
+    <script>
+        const api_url = "https://api.themoviedb.org/3/movie/popular?api_key=c0d62852f9495924dbb21700eb43337d";
+        async function movie() {
+            const response = await fetch(api_url);
+            const data = await response.json();
+            const movieContainer = document.getElementById("movies");
+            data.results.forEach(movie => {
+                const movieElement = document.createElement("div");
+                movieElement.classList.add("movie");
+                movieElement.innerHTML = `
+                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+                    <h2>${movie.title}</h2>
+                    <p>⭐ ${movie.vote_average}</p>
+                `;
+                movieContainer.appendChild(movieElement);
+            });
+        }
+        movie();
+    </script>
 </body>
-
 </html>
