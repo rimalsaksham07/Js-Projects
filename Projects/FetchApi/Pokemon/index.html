@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .pokemon {
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        h2 {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokémon List</h1>
+    <div class="container" id="pokemon"></div>
+
+    <script>
+        const api_url = "https://pokeapi.co/api/v2/pokemon?limit=20";
+        async function fetchPokemon() {
+            const response = await fetch(api_url);
+            const data = await response.json();
+            const pokemonContainer = document.getElementById("pokemon");
+            
+            for (let pokemon of data.results) {
+                const pokemonResponse = await fetch(pokemon.url);
+                const pokemonData = await pokemonResponse.json();
+                
+                const pokemonElement = document.createElement("div");
+                pokemonElement.classList.add("pokemon");
+                pokemonElement.innerHTML = `
+                    <img src="${pokemonData.sprites.front_default}" alt="${pokemonData.name}">
+                    <h2>${pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h2>
+                    <p>Type: ${pokemonData.types.map(type => type.type.name).join(", ")}</p>
+                `;
+                pokemonContainer.appendChild(pokemonElement);
+            }
+        }
+        fetchPokemon();
+    </script>
+</body>
+</html>
